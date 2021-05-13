@@ -1,3 +1,4 @@
+import multiprocessing
 import os
 
 from flask import Flask
@@ -10,6 +11,10 @@ def create_app():
     app = Flask(__name__)
     CORS(app)
     app.config['CORS_HEADERS'] = 'Content-Type'
+
+    # Create simulation queue
+    queue = multiprocessing.Queue()
+    queue.put(api.name)
 
     app.register_blueprint(api, url_prefix='/waiters/v1')
 
